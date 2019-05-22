@@ -1,7 +1,12 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FlightsApiService } from '../../../modules/api/flights/flights-api.service';
 import { Observable } from 'rxjs';
 import { Flight } from '../../../models/flight';
+
+import { Map, View } from 'ol';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+
 @Component(
   {
     selector: 'home-page',
@@ -24,6 +29,19 @@ export class HomePage implements OnInit {
 
   init() {
     this.flights$ = this.flightsAPI.getFlights(10);
+
+    const map = new Map({
+      target: 'map',
+      layers: [
+        new TileLayer({
+          source: new OSM()
+        })
+      ],
+      view: new View({
+        center: [0, 0],
+        zoom: 0
+      })
+    });
   }
 
   onFlightClick(flight: Flight) {
