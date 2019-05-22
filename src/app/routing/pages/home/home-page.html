@@ -8,8 +8,10 @@
   </div>
 	<div class="row">
 		<div class="col-12">
-			<ul class="list-group" *ngIf="(flights$ | async).length">
-        <li class="list-group-item" *ngFor="let item of flights$ | async">Dapibus ac facilisis in</li>
+			<ul class="list-group" *ngIf="(flights$ | async)">
+        <li class="list-group-item" *ngFor="let item of flights$ | async">
+          {{item.aircraft.icaoCode}}
+        </li>
       </ul>
 		</div>
 	</div>

@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
 
 @NgModule()
-export class FlightsApiModule {
-
-}
+export class FlightsApiModule { }

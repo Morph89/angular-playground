@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { FlightsApiService } from '../../../modules/api/flights/flights-api.service';
 import { Observable } from 'rxjs';
-
+import { Flight } from '../../../models/flight';
 @Component(
   {
     selector: 'home-page',
@@ -11,11 +11,10 @@ import { Observable } from 'rxjs';
 export class HomePage implements OnInit {
   flightsAPI: FlightsApiService;
 
-  flights$: Observable<any[]>;
+  flights$: Observable<Flight[]>;
 
   constructor(flightsApiService: FlightsApiService) {
     this.flightsAPI = flightsApiService;
-
   }
 
   ngOnInit() {
