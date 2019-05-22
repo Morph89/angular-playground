@@ -20,6 +20,9 @@ export class FlightsApiService {
     return Observable.create((observer) => {
       interval(1000).
         subscribe(_ => {
+          console.log("hi");
+          observer.next([]);
+          /*
           this.dataRequestService.request('GET', `https://aviation-edge.com/v2/public/flights?key=${key}&limit=${limit}`)
             .then((response: any) => {
               from(response)
@@ -35,7 +38,8 @@ export class FlightsApiService {
                 })
             }, error => {
               observer.complete([]);
-            })
+            });
+            */
         });
     })
   }

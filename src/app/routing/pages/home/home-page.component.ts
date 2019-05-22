@@ -24,11 +24,12 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.init();
+    //this.init();
   }
 
   init() {
-    this.flights$ = this.flightsAPI.getFlights(10);
+    this.flightsAPI.getFlights(10);
+    
 
     const map = new Map({
       target: 'map',
@@ -39,7 +40,7 @@ export class HomePage implements OnInit {
       ],
       view: new View({
         center: [0, 0],
-        zoom: 0
+        zoom: 5
       })
     });
   }
