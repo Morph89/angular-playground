@@ -1,6 +1,7 @@
 
 import { Component } from '@angular/core';
 import { DataRequestService } from './modules/common/data-request.service';
+import { PhotoApiService } from './modules/api/photos/photo-api.service';
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -8,17 +9,18 @@ import { DataRequestService } from './modules/common/data-request.service';
 })
 export class AppComponent  {
   name = 'Angular';
-  dataRequestService:DataRequestService;
+  photoAPI: PhotoApiService;
 
-  constructor(dataRequestService: DataRequestService) {
-    this.dataRequestService = dataRequestService;
+  constructor(photoApiService: PhotoApiService) {
+    this.photoAPI = photoApiService;
     this.init();
   }
 
   init() {
-    this.dataRequestService.request('GET', 'https://jsonplaceholder.typicode.com/photos')
+    this.photoAPI.getPhotos(10)
     .then(response => {
       console.log(response);
+    }, error => {
     })
   }
 }

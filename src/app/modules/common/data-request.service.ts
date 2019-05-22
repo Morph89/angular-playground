@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ajax } from 'rxjs/ajax';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DataRequestService {
   request(method, url, payload?) {
     return new Promise((resolve, reject) => {
