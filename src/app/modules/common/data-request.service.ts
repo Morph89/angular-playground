@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ajax } from 'rxjs/ajax';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DataRequestService {
-  constructor() {
-
-  }
-
   request(method, url, payload?) {
     return new Promise((resolve, reject) => {
       if (method === 'GET') {
@@ -19,7 +13,7 @@ export class DataRequestService {
           method: method,
           body: payload
         })
-          .subscribe(result => resolve(result), error => reject(error));
+        .subscribe(result => resolve(result), error => reject(error));
       }
     });
   }

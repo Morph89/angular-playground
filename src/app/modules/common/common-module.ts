@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
-import { DataRequestService} from './data-request.service';
-@NgModule({
-  imports:[],
-  declarations: [],
-  providers:[DataRequestService],
-  bootstrap:[]
-})
+import { DataRequestService } from './data-request.service';
+
+@NgModule()
 export class CommonModules {
 
 }

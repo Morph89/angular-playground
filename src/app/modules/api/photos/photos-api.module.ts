@@ -1,9 +1,6 @@
 import {NgModule} from '@angular/core';
-import { PhotoApiService } from './photo-api.service';
 
-@NgModule({
-  providers: [PhotoApiService]
-})
+@NgModule()
 export class PhotoApiModule {
 
 }
