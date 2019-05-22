@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
 import { DataRequestService } from './modules/common/data-request.service';
-import { PhotoApiService } from './modules/api/photos/photo-api.service';
+import { FlightsApiService } from './modules/api/flights/flights-api.service';
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -9,15 +9,15 @@ import { PhotoApiService } from './modules/api/photos/photo-api.service';
 })
 export class AppComponent  {
   name = 'Angular';
-  photoAPI: PhotoApiService;
+  flightsAPI: FlightsApiService;
 
-  constructor(photoApiService: PhotoApiService) {
-    this.photoAPI = photoApiService;
+  constructor(flightsApiService: FlightsApiService) {
+    this.flightsAPI = flightsApiService;
     this.init();
   }
 
   init() {
-    this.photoAPI.getPhotos(10)
+    this.flightsAPI.getFlights(10)
     .then(response => {
       console.log(response);
     }, error => {

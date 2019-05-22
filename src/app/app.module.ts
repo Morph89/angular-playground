@@ -6,11 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { CommonModules } from './modules/common/common-module';
-import { PhotoApiModule } from './modules/api/photos/photos-api.module';
+import { FlightsApiModule } from './modules/api/flights/flights-api.module';
 import { AppRoutes } from './routing/routing.consts';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, CommonModule, PhotoApiModule,
+  imports:      [ BrowserModule, FormsModule, CommonModule, FlightsApiModule,
   RouterModule.forRoot(
       AppRoutes,
       { enableTracing: true } // <-- debugging purposes only

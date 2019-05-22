@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component(
   {
     selector: 'home-page',
-    template: 'home-page.html'
+    templateUrl: 'home-page.html'
   }
 )
 export class HomePage {
