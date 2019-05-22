@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { FlightsApiService } from '../../../modules/api/flights/flights-api.service';
+import { Observable } from 'rxjs';
 
 @Component(
   {
@@ -6,8 +8,21 @@ import { Component } from '@angular/core';
     templateUrl: 'home-page.html'
   }
 )
-export class HomePage {
-  constructor() {
-    console.log('Home Page Loaded');
+export class HomePage implements OnInit {
+  flightsAPI: FlightsApiService;
+
+  flights$: Observable<any[]>;
+
+  constructor(flightsApiService: FlightsApiService) {
+    this.flightsAPI = flightsApiService;
+
+  }
+
+  ngOnInit() {
+    this.init();
+  }
+
+  init() {
+    this.flights$ = this.flightsAPI.getFlights(10);
   }
 }

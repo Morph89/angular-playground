@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePage } from './home-page.component';
+import { FlightsApiModule } from '../../../modules/api/flights/flights-api.module';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -12,7 +14,7 @@ const routes: Routes = [
 @NgModule({
   providers: [],
   declarations: [HomePage],
-  imports: [RouterModule.forChild(routes)],
+  imports: [FlightsApiModule, RouterModule.forChild(routes), CommonModule],
   exports: [RouterModule]
 })
 

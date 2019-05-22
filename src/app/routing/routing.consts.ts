@@ -4,7 +4,7 @@ export const AppRoutes: Routes = [
   { path: 'home', loadChildren: './pages/home/home-page.module#HomePageModule' },
   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];
