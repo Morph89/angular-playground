@@ -33,7 +33,7 @@ export class HomePage implements OnInit, OnDestroy {
 
 
   doStuff() {
-    const flightRequest = this.flightsAPI.getFlights(1000)
+    const flightRequest = this.flightsAPI.getFlights(500)
       .pipe(
         takeUntil(this.ngUnsubscribe),
         first()
@@ -64,26 +64,35 @@ export class HomePage implements OnInit, OnDestroy {
     });
     console.log('New flights length', newFlights.length);
 
-    if(removableMarkers.length > 0)  {
+    if (removableMarkers.length > 0) {
       this.clearMarkers(removableMarkers);
     }
 
-    if(newFlights.length > 0) {
+    if (newFlights.length > 0) {
       this.addMarkers(newFlights);
     }
 
-    if(existingMarkers.length > 0) {
+    if (existingMarkers.length > 0) {
       this.updateMarkers(existingMarkers);
     }
   }
 
   updateMarkers(existingMarkers: any[]) {
-    for(let marker of existingMarkers) {
+    for (let marker of existingMarkers) {
       const flight: Flight = this.flights$.find(f => f.flight.icaoNumber === marker.uuid || f.flight.iataNumber === marker.uuid);
 
-      const mker = this.markers.find(m => m.uuid = marker.uuid)
-      mker.marker.getIcon().strokeColor = 'black';
-      mker.marker.setPosition({ lat: flight.geography.latitude, lng: flight.geography.longitude });
+      for (let mk of this.markers) {
+        if (mk.uuid === marker.uuid) {
+          mk.marker.setIcon({
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 3,
+            strokeColor: 'black'
+          });
+          mk.marker.setPosition({ lat: flight.geography.latitude, lng: flight.geography.longitude });
+
+        }
+      }
+
     }
   }
 
@@ -101,17 +110,16 @@ export class HomePage implements OnInit, OnDestroy {
       });
       this.markers.push({
         uuid: flight.flight.iataNumber || flight.flight.icaoNumber,
-        marker: marker});
+        marker: marker
+      });
     }
   }
 
   clearMarkers(removableMarkers: any[]) {
     for (let i = 0; i < removableMarkers.length; i++) {
       removableMarkers[i].marker.setMap(null);
-      this.markers.splice(this.markers.indexOf(removableMarkers[i]),1);
+      this.markers.splice(this.markers.indexOf(removableMarkers[i]), 1);
     }
-    console.log('After celanup', this.markers.length);
-
   }
 
   ngOnDestroy() {
