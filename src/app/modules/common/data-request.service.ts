@@ -9,7 +9,13 @@ export class DataRequestService {
   request(method, url, payload?) {
     return new Promise((resolve, reject) => {
       if (method === 'GET') {
-        ajax.getJSON(url).subscribe(result => resolve(result), error => reject(error));
+        const request = ajax.getJSON(url).subscribe(result => {
+          request.unsubscribe();
+          resolve(result);
+          }, error => {
+            request.unsubscribe();
+            reject(error);
+          });
       } else {
         ajax({
           url: url,
