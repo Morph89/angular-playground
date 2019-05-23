@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { DataRequestService } from '../../common/data-request.service';
 import { Observable, from, of, interval, timer } from 'rxjs';
-import { bufferCount, toArray, take, catchError, map, filter } from 'rxjs/operators';
+import { bufferCount, toArray, take, catchError, map, filter, first } from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
 
 @Injectable({
@@ -19,7 +19,8 @@ export class FlightsApiService {
 
     return Observable.create((observer) => {
       timer(1000).
-        subscribe(_ => {
+      pipe(first())
+        .subscribe(_ => {
           console.log("hi");
           observer.next([]);
           observer.complete();
