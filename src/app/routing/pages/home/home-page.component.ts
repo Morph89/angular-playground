@@ -1,22 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,  ViewChild, ElementRef } from '@angular/core';
 import { FlightsApiService } from '../../../modules/api/flights/flights-api.service';
 import { Observable, Subject, timer } from 'rxjs';
 import { takeUntil, expand, first } from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
-
-import Map from 'ol/Map.js';
-import View from 'ol/View.js';
-import Feature from 'ol/Feature.js';
-import Polygon from 'ol/geom/Polygon.js';
-import Point from 'ol/geom/Point.js';
-import { fromLonLat } from 'ol/proj';
-import { defaults } from 'ol/control';
-import Draw, { createRegularPolygon, createBox } from 'ol/interaction/Draw.js';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
-import { OSM, Vector } from 'ol/source.js';
-import { Fill, RegularShape, Stroke, Style } from 'ol/style.js';
-import VectorLayer from 'ol/layer/Vector.js';
-import VectorSource from 'ol/source/Vector.js';
+import {} from 'googlemaps';
 
 @Component(
   {
@@ -29,24 +16,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   flights$: Flight[];
   selectedFlight: Flight = null;
-  subscriptions: any[] = [];
-  map: any;
-  activeLayer: VectorLayer;
-  stroke = new Stroke({ color: 'black', width: 2 });
-  fill = new Fill({ color: 'red' });
-  styles = {
-    'square': new Style({
-      image: new RegularShape({
-        fill: this.fill,
-        stroke: this.stroke,
-        points: 4,
-        radius: 10,
-        angle: Math.PI / 4
-      })
-    })
-  };
-
   ngUnsubscribe = new Subject<void>();
+
+  @ViewChild('map') mapElement: ElementRef<any>;
+  map: google.maps.Map;
 
   constructor(flightsApiService: FlightsApiService) {
     this.flightsAPI = flightsApiService;
@@ -55,6 +28,7 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.init();
   }
+
 
   doStuff() {
     const flightRequest = this.flightsAPI.getFlights(100)
@@ -66,34 +40,11 @@ export class HomePage implements OnInit, OnDestroy {
         this.flights$ = x;
         this.updateMarkers();
         flightRequest.unsubscribe();
-        this.doStuff();
+        // this.doStuff();
       });
   }
 
-  updateMarkers() {
-    if(this.activeLayer !== undefined) {
-      this.map.removeLayer(this.activeLayer);
-    }
-    let features = [];
-    for(let item of this.flights$) {
-      const coordinates = fromLonLat([item.geography.longitude, item.geography.latitude]);
-      let feature = new Feature(new Point(coordinates));
-      feature.setStyle(this.styles.square);
-      features.push(feature);
-    }
-     
-
-    var source = new VectorSource({
-      features: features
-    });
-
-    var vectorLayer = new VectorLayer({
-      source: source
-    });
-    this.activeLayer = vectorLayer;
-
-    this.map.addLayer(vectorLayer);
-  }
+  updateMarkers() {}
 
   ngOnDestroy() {
     this.unsubscribeSubscriptions();
@@ -105,27 +56,18 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   init() {
+    this.initMap();
     this.doStuff();
+  }
 
-    const washingtonLonLat = [-77.036667, 38.895];
-    const washingtonWebMercator = fromLonLat(washingtonLonLat);
-
-    this.map = new Map({
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        })
-      ],
-      controls: defaults({
-        attribution : false,
-        zoom : false
-    }),
-      target: 'map',
-      view: new View({
-        center: washingtonWebMercator,
-        zoom: 8
-      })
-    });
+  initMap() {
+    const mapProperties = {
+        center: new google.maps.LatLng(35.2271, -80.8431),
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+   };
+   console.log(this.mapElement)
+   this.map = new google.maps.Map(this.mapElement.nativeElement,    mapProperties);
   }
 
   onFlightClick(flight: Flight) {
