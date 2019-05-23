@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FlightsApiService } from '../../../modules/api/flights/flights-api.service';
 import { Observable, Subject, timer} from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, expand, first} from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
 
 import { Map, View } from 'ol';
@@ -17,7 +17,7 @@ import OSM from 'ol/source/OSM';
 export class HomePage implements OnInit , OnDestroy {
   flightsAPI: FlightsApiService;
 
-  flights$: Observable<Flight[]>;
+  flights$: Flight[];
   selectedFlight: Flight = null;
   subscriptions: any[] = [];
 
@@ -28,18 +28,19 @@ export class HomePage implements OnInit , OnDestroy {
   }
 
   ngOnInit() {
-    //this.init();
-    this.doStuff();
+    this.init();
   }
 
   doStuff() {
-    console.log('Doing stuff');
-    this.flightsAPI.getFlights(10)
+    const flightRequest = this.flightsAPI.getFlights(10)
     .pipe(
-      takeUntil(this.ngUnsubscribe)
+      takeUntil(this.ngUnsubscribe),
+      first()
     )
     .subscribe(x => {
-      console.log('hi');
+      this.flights$ = x;
+      flightRequest.unsubscribe();
+      this.doStuff();
     })
   }
 
@@ -54,9 +55,8 @@ export class HomePage implements OnInit , OnDestroy {
   }
 
   init() {
-    this.flightsAPI.getFlights(10);
+    this.doStuff();
     
-
     const map = new Map({
       target: 'map',
       layers: [

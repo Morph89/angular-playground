@@ -18,13 +18,11 @@ export class FlightsApiService {
     const key = 'b6b1ca-256761';
 
     return Observable.create((observer) => {
-      timer(1000).
+      timer(6000).
       pipe(first())
         .subscribe(_ => {
-          console.log("hi");
-          observer.next([]);
-          observer.complete();
-          /*
+          console.log("hi in handler");
+          
           this.dataRequestService.request('GET', `https://aviation-edge.com/v2/public/flights?key=${key}&limit=${limit}`)
             .then((response: any) => {
               from(response)
@@ -36,12 +34,14 @@ export class FlightsApiService {
                   catchError(_ => of('Hali'))
                 )
                 .subscribe(data => {
+                  console.log('hoppa', data);
                   observer.next(data);
+                  observer.complete();
                 })
             }, error => {
               observer.complete([]);
             });
-            */
+            
         });
     })
   }

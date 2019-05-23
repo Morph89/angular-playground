@@ -8,10 +8,10 @@
   </div>
 	<div class="row">
 		<div class="col-12">
-			<ul class="list-group" *ngIf="(flights$ | async)">
+			<ul class="list-group" *ngIf="(flights$)">
         <a href="#" class="list-group-item list-group-item-action"
         (click) = "onFlightClick(item)"
-        *ngFor="let item of flights$ | async">
+        *ngFor="let item of flights$">
           {{item.aircraft.icaoCode}}
         </a>
       </ul>
