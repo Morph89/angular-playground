@@ -34,7 +34,7 @@ export class HomePage implements OnInit , OnDestroy {
 
   doStuff() {
     console.log('Doing stuff');
-    timer(1000)
+    this.flightsAPI.getFlights(10)
     .pipe(
       takeUntil(this.ngUnsubscribe)
     )

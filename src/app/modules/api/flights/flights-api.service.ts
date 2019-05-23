@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { DataRequestService } from '../../common/data-request.service';
-import { Observable, from, of, interval } from 'rxjs';
+import { Observable, from, of, interval, timer } from 'rxjs';
 import { bufferCount, toArray, take, catchError, map, filter } from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
 
@@ -18,10 +18,11 @@ export class FlightsApiService {
     const key = 'b6b1ca-256761';
 
     return Observable.create((observer) => {
-      interval(1000).
+      timer(1000).
         subscribe(_ => {
           console.log("hi");
           observer.next([]);
+          observer.complete();
           /*
           this.dataRequestService.request('GET', `https://aviation-edge.com/v2/public/flights?key=${key}&limit=${limit}`)
             .then((response: any) => {
