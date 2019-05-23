@@ -12,7 +12,7 @@
         <a href="#" class="list-group-item list-group-item-action"
         (click) = "onFlightClick(item)"
         *ngFor="let item of flights$">
-          {{item.aircraft.icaoCode}}
+          {{item.flight.iataNumber || item.flight.icaoNumber}}
         </a>
       </ul>
 		</div>

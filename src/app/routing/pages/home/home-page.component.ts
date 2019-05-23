@@ -16,6 +16,7 @@ export class HomePage implements OnInit, OnDestroy {
   flightsAPI: FlightsApiService;
 
   flights$: Flight[];
+  markers: any[] = [];
   selectedFlight: Flight = null;
   ngUnsubscribe = new Subject<void>();
 
@@ -41,14 +42,35 @@ export class HomePage implements OnInit, OnDestroy {
         this.flights$ = x;
         this.updateMarkers();
         flightRequest.unsubscribe();
-        // this.doStuff();
+        this.doStuff();
       });
   }
 
   updateMarkers() {
-    for (let flight of this.flights$) {
+
+
+    let existingMarkers = this.markers.filter(m => {
+      return this.flights$.find(f => f.flight.icaoNumber === m.uuid || f.flight.iataNumber === m.uuid) != null;
+    });
+    console.log('Existing length', existingMarkers.length);
+
+    let removableMarkers = this.markers.filter(m => {
+      return this.flights$.find(f => f.flight.icaoNumber !== m.uuid && f.flight.iataNumber !== m.uuid) != null;
+    });
+    console.log('Removables length', removableMarkers.length);
+
+    let newFlights = this.flights$.filter(f => {
+      return this.markers.filter(m => m.uuid === f.flight.icaoNumber || m.uuid === f.flight.iataNumber).length === 0;
+    });
+    console.log('New flights length', newFlights.length);
+
+    if(removableMarkers.length > 0)  {
+      this.clearMarkers(removableMarkers);
+    }
+
+    for (let flight of newFlights) {
       const marker = new google.maps.Marker({
-        position: {lat: flight.geography.latitude, lng: flight.geography.longitude},
+        position: { lat: flight.geography.latitude, lng: flight.geography.longitude },
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 3,
@@ -57,7 +79,18 @@ export class HomePage implements OnInit, OnDestroy {
         draggable: true,
         map: this.map
       });
+      this.markers.push({
+        uuid: flight.flight.iataNumber || flight.flight.icaoNumber,
+        marker: marker});
     }
+  }
+
+  clearMarkers(removableMarkers: any) {
+    for (let i = 0; i < removableMarkers.length; i++) {
+      removableMarkers[i].marker.setMap(null);
+      this.markers.splice(this.markers.indexOf(removableMarkers[i]))
+    }
+
   }
 
   ngOnDestroy() {

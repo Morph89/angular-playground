@@ -8,6 +8,7 @@ export class Flight {
   speed: any;
   status: any;
   system: any;
+  marker:any;
 
   constructor(data:any) {
     this.aircraft = data.aircraft;
@@ -22,5 +23,9 @@ export class Flight {
 
   getIcaoCode():string {
     return this.aircraft.iataCode || 'NOICAO';
+  }
+
+  setMarker(value:any) {
+    this.marker = value;
   }
 }

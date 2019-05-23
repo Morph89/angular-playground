@@ -27,7 +27,7 @@ export class FlightsApiService {
                 .pipe(
                   take(limit),
                   map(x => new Flight(x)),
-                  filter(x => x.aircraft.iataCode !== '' || x.aircraft.icaoCode !== ''),
+                  filter(x => x.flight.iataNumber !== '' || x.flight.icaoNumber !== ''),
                   toArray(),
                   catchError(_ => of('Hali'))
                 )
