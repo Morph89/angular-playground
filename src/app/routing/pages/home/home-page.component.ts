@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FlightsApiService } from '../../../modules/api/flights/flights-api.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject, timer} from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
 
 import { Map, View } from 'ol';
@@ -13,11 +14,14 @@ import OSM from 'ol/source/OSM';
     templateUrl: 'home-page.html'
   }
 )
-export class HomePage implements OnInit {
+export class HomePage implements OnInit , OnDestroy {
   flightsAPI: FlightsApiService;
 
   flights$: Observable<Flight[]>;
   selectedFlight: Flight = null;
+  subscriptions: any[] = [];
+
+  ngUnsubscribe = new Subject<void>();
 
   constructor(flightsApiService: FlightsApiService) {
     this.flightsAPI = flightsApiService;
@@ -25,6 +29,28 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     //this.init();
+    this.doStuff();
+  }
+
+  doStuff() {
+    console.log('Doing stuff');
+    timer(1000)
+    .pipe(
+      takeUntil(this.ngUnsubscribe)
+    )
+    .subscribe(x => {
+      console.log('hi');
+    })
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeSubscriptions();
+  }
+
+  unsubscribeSubscriptions() {
+    console.log('Unsubscribe called');
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   init() {
