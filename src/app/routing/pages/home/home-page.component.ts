@@ -33,7 +33,7 @@ export class HomePage implements OnInit, OnDestroy {
 
 
   doStuff() {
-    const flightRequest = this.flightsAPI.getFlights(100)
+    const flightRequest = this.flightsAPI.getFlights(1000)
       .pipe(
         takeUntil(this.ngUnsubscribe),
         first()
@@ -55,7 +55,7 @@ export class HomePage implements OnInit, OnDestroy {
     console.log('Existing length', existingMarkers.length);
 
     let removableMarkers = this.markers.filter(m => {
-      return this.flights$.find(f => f.flight.icaoNumber !== m.uuid && f.flight.iataNumber !== m.uuid) != null;
+      return this.flights$.find(f => f.flight.icaoNumber == m.uuid || f.flight.iataNumber == m.uuid) == null;
     });
     console.log('Removables length', removableMarkers.length);
 
@@ -81,7 +81,8 @@ export class HomePage implements OnInit, OnDestroy {
     for(let marker of existingMarkers) {
       const flight: Flight = this.flights$.find(f => f.flight.icaoNumber === marker.uuid || f.flight.iataNumber === marker.uuid);
 
-      marker.setPosition({ lat: flight.geography.latitude, lng: flight.geography.longitude });
+      marker.marker.getIcon().strokeColor = 'green';
+      marker.marker.setPosition({ lat: flight.geography.latitude, lng: flight.geography.longitude });
     }
   }
 
@@ -106,8 +107,9 @@ export class HomePage implements OnInit, OnDestroy {
   clearMarkers(removableMarkers: any[]) {
     for (let i = 0; i < removableMarkers.length; i++) {
       removableMarkers[i].marker.setMap(null);
-      this.markers.splice(this.markers.indexOf(removableMarkers[i]))
+      this.markers.splice(this.markers.indexOf(removableMarkers[i]),1);
     }
+    console.log('After celanup', this.markers.length);
 
   }
 
