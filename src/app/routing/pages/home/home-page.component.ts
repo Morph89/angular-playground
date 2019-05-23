@@ -81,8 +81,9 @@ export class HomePage implements OnInit, OnDestroy {
     for(let marker of existingMarkers) {
       const flight: Flight = this.flights$.find(f => f.flight.icaoNumber === marker.uuid || f.flight.iataNumber === marker.uuid);
 
-      marker.marker.getIcon().strokeColor = 'green';
-      marker.marker.setPosition({ lat: flight.geography.latitude, lng: flight.geography.longitude });
+      const mker = this.markers.find(m => m.uuid = marker.uuid)
+      mker.marker.getIcon().strokeColor = 'black';
+      mker.marker.setPosition({ lat: flight.geography.latitude, lng: flight.geography.longitude });
     }
   }
 
