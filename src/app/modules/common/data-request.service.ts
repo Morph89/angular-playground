@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ajax } from 'rxjs/ajax';
+import { first } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class DataRequestService {
           method: method,
           body: payload
         })
+        .pipe(first())
         .subscribe(result => resolve(result), error => reject(error));
       }
     });
