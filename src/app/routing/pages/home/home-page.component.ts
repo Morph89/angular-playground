@@ -8,7 +8,8 @@ import {} from 'googlemaps';
 @Component(
   {
     selector: 'home-page',
-    templateUrl: 'home-page.html'
+    templateUrl: 'home-page.html',
+    styleUrls: ['home-page.css']
   }
 )
 export class HomePage implements OnInit, OnDestroy {
