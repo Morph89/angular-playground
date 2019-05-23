@@ -8,6 +8,7 @@ import { HelloComponent } from './hello.component';
 import { CommonModules } from './modules/common/common-module';
 import { FlightsApiModule } from './modules/api/flights/flights-api.module';
 import { AppRoutes } from './routing/routing.consts';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, CommonModule, FlightsApiModule,

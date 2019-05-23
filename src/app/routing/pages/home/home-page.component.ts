@@ -10,6 +10,7 @@ import Feature from 'ol/Feature.js';
 import Polygon from 'ol/geom/Polygon.js';
 import Point from 'ol/geom/Point.js';
 import { fromLonLat } from 'ol/proj';
+import { defaults } from 'ol/control';
 import Draw, { createRegularPolygon, createBox } from 'ol/interaction/Draw.js';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { OSM, Vector } from 'ol/source.js';
@@ -53,8 +54,6 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.init();
-
-
   }
 
   doStuff() {
@@ -101,7 +100,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   unsubscribeSubscriptions() {
-    console.log('Unsubscribe called');
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
@@ -118,6 +116,10 @@ export class HomePage implements OnInit, OnDestroy {
           source: new OSM()
         })
       ],
+      controls: defaults({
+        attribution : false,
+        zoom : false
+    }),
       target: 'map',
       view: new View({
         center: washingtonWebMercator,
