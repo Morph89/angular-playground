@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy,  ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FlightsApiService } from '../../../modules/api/flights/flights-api.service';
 import { Observable, Subject, timer } from 'rxjs';
 import { takeUntil, expand, first } from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
-import {} from 'googlemaps';
+import { } from 'googlemaps';
 
 @Component(
   {
@@ -45,7 +45,20 @@ export class HomePage implements OnInit, OnDestroy {
       });
   }
 
-  updateMarkers() {}
+  updateMarkers() {
+    for (let flight of this.flights$) {
+      const marker = new google.maps.Marker({
+        position: {lat: flight.geography.latitude, lng: flight.geography.longitude},
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 3,
+          strokeColor: 'red'
+        },
+        draggable: true,
+        map: this.map
+      });
+    }
+  }
 
   ngOnDestroy() {
     this.unsubscribeSubscriptions();
@@ -63,12 +76,12 @@ export class HomePage implements OnInit, OnDestroy {
 
   initMap() {
     const mapProperties = {
-        center: new google.maps.LatLng(35.2271, -80.8431),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-   };
-   console.log(this.mapElement)
-   this.map = new google.maps.Map(this.mapElement.nativeElement,    mapProperties);
+      center: new google.maps.LatLng(35.2271, -80.8431),
+      zoom: 2,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
   }
 
   onFlightClick(flight: Flight) {
