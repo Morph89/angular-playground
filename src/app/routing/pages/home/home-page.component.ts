@@ -40,13 +40,13 @@ export class HomePage implements OnInit, OnDestroy {
       )
       .subscribe(x => {
         this.flights$ = x;
-        this.updateMarkers();
+        this.setupMarkers();
         flightRequest.unsubscribe();
         this.doStuff();
       });
   }
 
-  updateMarkers() {
+  setupMarkers() {
 
 
     let existingMarkers = this.markers.filter(m => {
@@ -68,6 +68,24 @@ export class HomePage implements OnInit, OnDestroy {
       this.clearMarkers(removableMarkers);
     }
 
+    if(newFlights.length > 0) {
+      this.addMarkers(newFlights);
+    }
+
+    if(existingMarkers.length > 0) {
+      this.updateMarkers(existingMarkers);
+    }
+  }
+
+  updateMarkers(existingMarkers: any[]) {
+    for(let marker of existingMarkers) {
+      const flight: Flight = this.flights$.find(f => f.flight.icaoNumber === marker.uuid || f.flight.iataNumber === marker.uuid);
+
+      marker.setPosition({ lat: flight.geography.latitude, lng: flight.geography.longitude });
+    }
+  }
+
+  addMarkers(newFlights: Flight[]) {
     for (let flight of newFlights) {
       const marker = new google.maps.Marker({
         position: { lat: flight.geography.latitude, lng: flight.geography.longitude },
@@ -85,7 +103,7 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  clearMarkers(removableMarkers: any) {
+  clearMarkers(removableMarkers: any[]) {
     for (let i = 0; i < removableMarkers.length; i++) {
       removableMarkers[i].marker.setMap(null);
       this.markers.splice(this.markers.indexOf(removableMarkers[i]))
