@@ -48,21 +48,17 @@ export class HomePage implements OnInit, OnDestroy {
 
   setupMarkers() {
 
-
     let existingMarkers = this.markers.filter(m => {
       return this.flights$.find(f => f.flight.icaoNumber === m.uuid || f.flight.iataNumber === m.uuid) != null;
     });
-    console.log('Existing length', existingMarkers.length);
 
     let removableMarkers = this.markers.filter(m => {
       return this.flights$.find(f => f.flight.icaoNumber == m.uuid || f.flight.iataNumber == m.uuid) == null;
     });
-    console.log('Removables length', removableMarkers.length);
 
     let newFlights = this.flights$.filter(f => {
       return this.markers.filter(m => m.uuid === f.flight.icaoNumber || m.uuid === f.flight.iataNumber).length === 0;
     });
-    console.log('New flights length', newFlights.length);
 
     if (removableMarkers.length > 0) {
       this.clearMarkers(removableMarkers);
@@ -75,6 +71,10 @@ export class HomePage implements OnInit, OnDestroy {
     if (existingMarkers.length > 0) {
       this.updateMarkers(existingMarkers);
     }
+  }
+
+  onFlightSelected(flight: Flight) {
+    this.selectedFlight = flight;
   }
 
   updateMarkers(existingMarkers: any[]) {
@@ -144,9 +144,5 @@ export class HomePage implements OnInit, OnDestroy {
     };
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
-  }
-
-  onFlightClick(flight: Flight) {
-    this.selectedFlight = flight;
   }
 }
