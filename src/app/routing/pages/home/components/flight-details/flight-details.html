@@ -2,7 +2,7 @@
 	<div class="card text-center">
 		<div class="card-header">
 			<ul class="nav nav-tabs card-header-tabs">
-				<li class="nav-item">
+				<li class="nav-item" (click) = "onNavigationClick()">
 					<a class="nav-link active" href="#">Aircraft</a>
 				</li>
 				<li class="nav-item">
@@ -13,8 +13,8 @@
 				</li>
 			</ul>
 		</div>
-		<div class="card-body text-left">
-      <aircraft-details [aircraftDetail]="getAircraftDetails()"></aircraft-details>
+		<div class="card-body text-left" *ngIf="canShowDetails()">
+      <aircraft-details [aircraftDetail]="details"></aircraft-details>
 		</div>
 	</div>
 </div>

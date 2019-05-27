@@ -3,9 +3,15 @@ import { Flight } from './flight';
 export class AircraftDetails {
   departure: string;
   destination: string;
+  departurePosition: number[];
+  destinationPosition: number[];
+;  altitude: number;
   
-  constructor(flight: Flight) {
-    this.departure = flight.departure.icaoCode,
-    this.destination = flight.arrival.icaoCode
+  constructor(flight: Flight, dP: number[], dsP: number[]) {
+    this.departure = flight.departure.icaoCode;
+    this.destination = flight.arrival.icaoCode;
+    this.altitude = flight.geography.altitude;
+    this.departurePosition = dP;
+    this.destinationPosition = dsP;
   }
 }

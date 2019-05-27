@@ -5,9 +5,7 @@ import { Observable, from, of, interval, timer } from 'rxjs';
 import { bufferCount, toArray, take, catchError, map, filter, first } from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FlightsApiService {
   dataRequestService: DataRequestService;
 

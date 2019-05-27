@@ -1,8 +1,14 @@
 #aircraft-details {
   .detail-holder {
+    position: relative;
+
     div {
       display: inline-block;
       vertical-align: top;
+    }
+
+    #plane {
+      position: absolute;
     }
 
     .waypoint {
