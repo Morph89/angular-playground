@@ -1,0 +1,19 @@
+#aircraft-details {
+  .detail-holder {
+    div {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .waypoint {
+      width:50px;
+      height:50px;
+      border: 2px solid #FF0000;
+      border-radius: 50%;
+    }
+
+    .route-line {
+      width:calc(100% - 100px);
+    }
+  }
+}

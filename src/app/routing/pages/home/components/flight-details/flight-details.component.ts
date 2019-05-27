@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Input, Output } from '@angular/core';
 import { Flight } from '../../../../../models/flight';
+import { AircraftDetails } from '../../../../../models/aircraft-details';
 
 enum NavigationStates {
   Aircraft,
@@ -21,5 +22,9 @@ export class FlightDetailsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.flight);
+  }
+
+  getAircraftDetails(): AircraftDetails {
+    return new AircraftDetails( this.flight);
   }
 }

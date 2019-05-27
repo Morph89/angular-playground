@@ -42,7 +42,7 @@ export class HomePage implements OnInit, OnDestroy {
         this.flights$ = x;
         this.setupMarkers();
         flightRequest.unsubscribe();
-        this.doStuff();
+        // this.doStuff();
       });
   }
 

@@ -18,7 +18,7 @@ export class FlightsApiService {
     const key = 'b6b1ca-256761';
 
     return Observable.create((observer) => {
-      timer(10000).
+      timer(1000).
       pipe(first())
         .subscribe(_ => {
           this.dataRequestService.request('GET', `https://aviation-edge.com/v2/public/flights?key=${key}&limit=${limit}`)
