@@ -74,9 +74,16 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   onFlightSelected(flight: Flight) {
-    this.selectedFlight = flight;
-    this.map.setCenter(new google.maps.LatLng( flight.geography.latitude, flight.geography.longitude ) );
-    this.map.setZoom(6);
+    this.selectedFlight = null;
+
+    timer(1)
+      .pipe(first())
+      .subscribe((x) => {
+        this.selectedFlight = flight;
+        this.map.setCenter(new google.maps.LatLng(flight.geography.latitude, flight.geography.longitude));
+        this.map.setZoom(6);
+      })
+
   }
 
   updateMarkers(existingMarkers: any[]) {

@@ -5,7 +5,8 @@ export class AircraftDetails {
   destination: string;
   departurePosition: number[];
   destinationPosition: number[];
-;  altitude: number;
+  altitude: number;
+  tripPercentage: number;
   
   constructor(flight: Flight, dP: number[], dsP: number[]) {
     this.departure = flight.departure.icaoCode;

@@ -13,7 +13,8 @@ export class AircraftDetailsComponent implements OnInit{
 
   getPlaneStyle() {
     return {
-      top: - (this.aircraftDetail.altitude / 1000) - 12.5 + 'px'
+      top: - (this.aircraftDetail.altitude / 1000) - 12.5 + 'px',
+      left: this.aircraftDetail.tripPercentage + '%'
     }
   }
 }

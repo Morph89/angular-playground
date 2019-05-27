@@ -8,6 +8,7 @@ export function MapLoaderService(): () => Promise<any> {
         resolve(window.gapi);
       };
 
+
       const node = document.createElement('script');
       node.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAbWJL5AjAp6wSa0Xb0POuxHhaJxf02E9o&callback=__onGapiLoaded';
       node.type = 'text/javascript';
