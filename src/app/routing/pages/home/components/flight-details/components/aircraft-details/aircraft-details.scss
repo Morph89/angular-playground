@@ -10,6 +10,14 @@
       height:50px;
       border: 2px solid #FF0000;
       border-radius: 50%;
+      text-align: center;
+
+      
+      .label {
+        margin-top:12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
     }
 
     .route-line {
