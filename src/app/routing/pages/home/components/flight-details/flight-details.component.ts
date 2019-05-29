@@ -17,7 +17,8 @@ enum NavigationStates {
   templateUrl: 'flight-details.html'
 })
 export class FlightDetailsComponent implements OnInit {
-  @Input() flight: Flight;
+
+  flight: Flight;
   activeNavigation: string = 'aircraft';
   geoApiService: GeoApiService;
   details: AircraftDetails;
@@ -29,6 +30,11 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  setup(flight: Flight) {
+    this.flight = flight;
     let dets = new AircraftDetails(this.flight);
     this.geoApiService.getLatLong(dets.departure).then((response) => {
       dets.departurePosition = [response[0].geometry.location.lat(), response[0].geometry.location.lng()];

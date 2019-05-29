@@ -5,6 +5,8 @@ import { takeUntil, expand, first } from 'rxjs/operators';
 import { Flight } from '../../../models/flight';
 import { } from 'googlemaps';
 
+import { FlightDetailsComponent } from './components/flight-details/flight-details.component';
+
 @Component(
   {
     selector: 'home-page',
@@ -20,6 +22,7 @@ export class HomePage implements OnInit, OnDestroy {
   selectedFlight: Flight = null;
   ngUnsubscribe = new Subject<void>();
 
+  @ViewChild('details') detailsPanel: FlightDetailsComponent;
   @ViewChild('map') mapElement: ElementRef<any>;
   map: google.maps.Map;
 
@@ -74,14 +77,13 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   onFlightSelected(flight: Flight) {
-    this.selectedFlight = null;
-
     timer(1)
       .pipe(first())
       .subscribe((x) => {
         this.selectedFlight = flight;
         this.map.setCenter(new google.maps.LatLng(flight.geography.latitude, flight.geography.longitude));
         this.map.setZoom(6);
+        this.detailsPanel.setup(this.selectedFlight);
       })
 
   }
@@ -117,6 +119,7 @@ export class HomePage implements OnInit, OnDestroy {
         draggable: true,
         map: this.map
       });
+      marker.setDraggable(false);
       this.markers.push({
         uuid: flight.flight.iataNumber || flight.flight.icaoNumber,
         marker: marker
