@@ -120,6 +120,9 @@ export class HomePage implements OnInit, OnDestroy {
         map: this.map
       });
       marker.setDraggable(false);
+      marker.addListener('click',  () => {
+        this.onFlightSelected(flight);
+      })
       this.markers.push({
         uuid: flight.flight.iataNumber || flight.flight.icaoNumber,
         marker: marker

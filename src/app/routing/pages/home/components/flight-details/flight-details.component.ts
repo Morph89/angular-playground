@@ -14,7 +14,8 @@ enum NavigationStates {
 
 @Component({
   selector: 'flight-details',
-  templateUrl: 'flight-details.html'
+  templateUrl: 'flight-details.html',
+  styleUrls: ['./flight-details.scss']
 })
 export class FlightDetailsComponent implements OnInit {
 

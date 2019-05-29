@@ -1,6 +1,12 @@
 #aircraft-details {
+  width: 100%;
   .detail-holder {
     position: relative;
+
+    #detailwrap {
+      width: 100%;
+    }
+
 
     div {
       display: inline-block;

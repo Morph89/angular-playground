@@ -7,19 +7,19 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-4">
+		<!--<div class="col-4">
 			<ul class="list-group" *ngIf="(flights$)">
 				<a (click)="onFlightSelected(item)" class="list-group-item list-group-item-action"  *ngFor="let item of flights$">
 					{{item.flight.iataNumber || item.flight.icaoNumber}}
 				</a>
 			</ul>
-		</div>
-		<div class="col-8">
+		</div>-->
+		<div class="col-12">
 			<div id="map-holder">
 				<div #map></div>
 			</div>
-			<div class="row mt-3">
-        <flight-details [hidden]="!selectedFlight" #details></flight-details>
+      <div class="row mt-3">
+        <flight-details [hidden]="!selectedFlight" #details width="100%"></flight-details>
 			</div>
 		</div>
 	</div>

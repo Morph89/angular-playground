@@ -1,11 +1,11 @@
 <div id="aircraft-details">
 	<div class="detail-holder">
-		<div>
-      <div class="waypoint">
-        <div class="label">{{aircraftDetail.departure}}</div>
-      </div>
-      <div class="route-line">
-        <div id="plane" [ngStyle]="getPlaneStyle()"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Aeroplane_icon_side_facing_right.svg/500px-Aeroplane_icon_side_facing_right.svg.png" width="25" height="25" style="margin-left:-12.5px"></div>
+		<div id="detailwrap">
+			<div class="waypoint">
+				<div class="label">{{aircraftDetail.departure}}</div>
+			</div>
+			<div class="route-line">
+				<div id="plane" [ngStyle]="getPlaneStyle()"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Aeroplane_icon_side_facing_right.svg/500px-Aeroplane_icon_side_facing_right.svg.png" width="25" height="25" style="margin-left:-12.5px"></div>
         <svg height="50" width="100%">
           <line x1="0" y1="50%" x2="100%" y2="50%" style="stroke:rgb(255,0,0);stroke-width:2" />
         </svg>
@@ -15,3 +15,4 @@
       </div>
     </div>
 	</div>
+</div>
